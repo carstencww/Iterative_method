@@ -28,3 +28,17 @@ for i = 1 : N
   mu = x' * A * x;
 end
 end
+
+A = hilb(100);
+eig_all = eig(A);
+eig_target = eig_all(end-2);
+
+x = ones(100, 1);
+mu = 0.5;
+for N = 1 : 5
+	eig_inv = inverse_power(A, x, mu, N);
+	eig_rqi = rqi(A, x, mu, N);
+	err_inv = abs(eig_inv - eig_target);
+	err_rqi = abs(eig_rqi - eig_target);
+	fprintf('| %d | %e | %e |\n', N, err_inv, err_rqi);
+end
