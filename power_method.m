@@ -14,3 +14,17 @@ r = norm(A * x, inf);
 end
 
 
+
+function [mu] = rqi(A, x, mu, N)
+% RQI
+% A   : n x n matrix
+% x   : n x 1 nonzero vector
+% N   : number of iterations
+% mu  : estimated spectral radius of A
+I = eye(size(A));
+for i = 1 : N
+  x = (A - mu * I) \ x;
+  x = x / norm(x);
+  mu = x' * A * x;
+end
+end
