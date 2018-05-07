@@ -13,13 +13,13 @@ p = z;
 for i = 1 : 50
 	alpha = (- z' * r) / (d' * A * d);
 	x = x + alpha * d;
-	temp = z' * r
+	temp = z' * r;
 	r = r - alpha * A * p; 
 	y = E * x;
 	z = M \ r;
 	beta = (z' * r) / temp;
 	d = z + beta * d;
 	%if i == 25 || i == 50
-	fprintf('%d\t\t%.3e\n', [i, sum(abs(A * y - b))]);
+	fprintf('%d\t\t%.3e\n', [i, r' * r]);
 	%end
 end
