@@ -8,17 +8,17 @@ fprintf(1, '#iter\t error\n');
 E = gallery('tridiag', 1000, -1, 2, -1);
 M = E * E;
 r = A * x - b;
-z = r \ M;
+z = M \ r;
 d = -z;
 for i = 1 : 50
 	alpha = (- r' * d) / (d' * A * d);
 	x = x + alpha * d;
 	y = E * x;
 	r = A * x - b;
-	z = r / M;
+	z = M \ r;
 	beta = (- z' * A * d) / (d' * A * d);
 	d = - r - beta * d;
 	%if i == 25 || i == 50
-	fprintf('%d\t\t%.3e\n', [i, sum(abs(A' * (A * y) - A' * b))]);
+	fprintf('%d\t\t%.3e\n', [i, sum(abs(A * y - b))]);
 	%end
 end
