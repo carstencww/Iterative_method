@@ -7,17 +7,18 @@ fprintf(1, '#iter\t error\n');
 
 E = gallery('tridiag', 1000, -1, 2, -1);
 M = E * E;
-r = A * x - b;
+r = b - A * x;
 z = M \ r;
-d = -z;
+p = z;
 for i = 1 : 50
-	alpha = (- r' * d) / (d' * A * d);
+	alpha = (- z' * r) / (d' * A * d);
 	x = x + alpha * d;
+	temp = z' * r
+	r = r - alpha * A * p; 
 	y = E * x;
-	r = A * x - b;
 	z = M \ r;
-	beta = (- z' * A * d) / (d' * A * d);
-	d = - r - beta * d;
+	beta = (z' * r) / temp;
+	d = z + beta * d;
 	%if i == 25 || i == 50
 	fprintf('%d\t\t%.3e\n', [i, sum(abs(A * y - b))]);
 	%end
